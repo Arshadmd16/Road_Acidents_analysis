@@ -1,0 +1,83 @@
+========================
+DAX Expressions Documentation
+========================
+
+Note- for current year, I have used 2022, because the data which I had, contained data upto the year 2022, 
+Otherwise to for current year calculations, I would have used ( year(today()) which would have pulled out "2024" as the current and used in comparision
+
+--------------------------------------------------
+## Current year (CY) accidents
+
+CY Accidents = CALCULATE(COUNT('road accident data'[Accident_Severity]), 'road accident data'[year] = "2022")
+
+---------------------------------------------------
+
+## CY Fatal casualties 
+
+CY fatal cusualties = CALCULATE(SUM('road accident data'[Number_of_Casualties]), 'road accident data'[Accident_Severity] = "Fatal", 'road accident data'[year] = "2022")
+---------------------------------------------------
+
+## CY Serious cusualties
+
+CY Serious cusualties = CALCULATE(sum('road accident data'[Number_of_Casualties]), 'road accident data'[Accident_Severity] = "Serious", 'road accident data'[year] = "2022")
+---------------------------------------------------
+
+## CY Slight cusualties
+
+CY Slight cusualties = CALCULATE(SUM('road accident data'[Number_of_Casualties]), 'road accident data'[Accident_Severity] = "Slight", 'road accident data'[year] = "2022")
+----------------------------------------------------
+
+## cy_casualties
+
+cy_casualties = CALCULATE(SUM('road accident data'[Number_of_Casualties]), 'road accident data'[year] = "2022")
+----------------------------------------------------
+
+## Fatal diff
+
+Fatal diff = DIVIDE(([CY fatal cusualties]- [py fatal]), [py fatal])
+-----------------------------------------------------
+
+## py (previous year) Accident
+
+PY Accident = CALCULATE(count('road accident data'[Accident_Index]), 'road accident data'[year] = "2021")
+------------------------------------------------------
+
+## PY diff
+
+PY diff = DIVIDE(
+    ('road accident data'[cy_casualties] - 'road accident data'[PY Year]), [PY Year] )
+------------------------------------------------------
+
+## py fatal
+
+py fatal = CALCULATE( SUM('road accident data'[Number_of_Casualties]), 'road accident data'[Accident_Severity] = "Fatal", 'road accident data'[year] = "2021")
+------------------------------------------------------
+
+## py serious
+
+py serious = CALCULATE( SUM('road accident data'[Number_of_Casualties]) , 'road accident data'[Accident_Severity] = "Serious", 'road accident data'[year] = "2021")
+------------------------------------------------------
+
+## py slight
+
+py slight = CALCULATE(sum('road accident data'[Number_of_Casualties]), 'road accident data'[Accident_Severity] = "Slight", 'road accident data'[year] = "2021")
+-------------------------------------------------------
+
+## PY Year
+
+PY Year = CALCULATE(SUM('road accident data'[Number_of_Casualties]), 'road accident data'[year]= "2021")
+-------------------------------------------------------
+
+## serious diff
+
+serious diff = DIVIDE(([CY Serious cusualties] - [py serious]), [py serious])
+-------------------------------------------------------
+
+##slight diff
+
+slight diff = DIVIDE(([CY Slight cusualties] - [py slight]), [py slight])
+-------------------------------------------------------
+
+##Year column
+
+year = YEAR('road accident data'[Accident Date])
